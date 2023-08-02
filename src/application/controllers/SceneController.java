@@ -2,6 +2,7 @@ package application.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import application.models.JournalModel;
 import javafx.event.ActionEvent;
@@ -15,12 +16,11 @@ import javafx.stage.Stage;
  * Parent class for all scene controllers
  * provides access to a user model that persists through application's lifetime
  */
-class SceneController {
+public class SceneController {
 	private static final String viewPackagePath = "resources/views/";
 	
 	// static class variable to avoid being reset upon re-instantiation
 	private static View prevView;
-	
 	
 	private static void setPrevView(View view) {
 		prevView = view;
@@ -28,6 +28,24 @@ class SceneController {
 	
 	private static View getPrevView() {
 		return prevView;
+	}
+	
+	
+	/**
+	 * Gets the initial login scene for the application
+	 * 
+	 * @return the login scene of the application
+	 * @throws MalformedURLException an exception indicating that the login view's URL was invalid
+	 * @throws IOException an exception indicating that the loginView's fxml file does not exist
+	 */
+	public static Scene getInitialScene() throws MalformedURLException, IOException {		
+		// get the Login View from local files and create scene
+		String loginViewPath = viewPackagePath + View.LOGIN.getValue();
+		File loginView = new File(loginViewPath);
+		BorderPane root = FXMLLoader.load(loginView.toURI().toURL());
+		
+		Scene scene = new Scene(root, 600, 400);
+		return scene;
 	}
 	
 
@@ -71,7 +89,6 @@ class SceneController {
 	 */
 	protected void switchToEditView(ActionEvent e, JournalModel journal) {
 		try {
-			
 			setPrevView(View.SEARCH);
 			
 			// load the view from fxml file and create new scene
@@ -81,8 +98,8 @@ class SceneController {
 			BorderPane root = loader.load();
 			
 			// initalize the data on the page
-			EditController controller = loader.getController();
-			controller.init(journal);
+			CreateController controller = loader.getController();
+			controller.initializeOldJournal(journal);
 			
 			// set scene
 			Scene scene = new Scene(root);
@@ -114,8 +131,10 @@ class SceneController {
 	}
 	
 	
+	
 	/**
-	 * Enumerates all possible views the application can switch to
+	 * Enumerates the possible views the application can switch to,
+	 * excluding "Edit" which must be accessed via switchToView method.
 	 */
 	protected enum View {
 		LOGIN("Login.fxml"),

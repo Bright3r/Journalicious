@@ -30,6 +30,7 @@ public class JournalModel {
 		this.context = context;
 	}
 	
+	
 	/**
 	 * Gets the title of the journal entry
 	 * 

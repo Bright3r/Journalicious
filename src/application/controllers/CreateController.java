@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 import application.dal.JournalDAO;
+import application.models.JournalModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,7 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 
 /**
- * Controller for the "Create" page.
+ * Controller for the "Create" and "Edit" scenes.
  */
 public class CreateController extends SceneController implements Initializable {
 	@FXML private TextField titleField;
@@ -27,7 +28,7 @@ public class CreateController extends SceneController implements Initializable {
 	@FXML private Spinner<Integer> hourSpinner;
 	@FXML private Spinner<Integer> minuteSpinner;
 	@FXML private TextArea journalContextArea;
-	
+		
 	/**
 	 * A custom string converter object that formats times
 	 */
@@ -51,19 +52,15 @@ public class CreateController extends SceneController implements Initializable {
 	};
 	
 	
+	// instance vars
+	private JournalModel journal;
+	
+	
 	/**
-	 * Adds an event listener to a spinner that checks if spinners were clicked in/out of
-	 * 
-	 * @param spinner the spinner to add the event listener to
+	 * Creates an instance of CreateController
 	 */
-	void addFocusLostEventListener(Spinner<Integer> spinner) {
-		// addListener takes ChangeListener Functional Interface implementation as argument
-		spinner.getEditor().focusedProperty().addListener((observableValue, previousValue, newValue) -> {
-			// If there is not a new value, reset spinner to default
-			if (!newValue) {
-				spinner.increment(0);
-			}
-		});
+	public CreateController() {
+		this.journal = null;
 	}
 	
 	
@@ -78,21 +75,18 @@ public class CreateController extends SceneController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// add event listener to the time spinners 
 		// that updates the field when the user clicks out of the spinner
-		addFocusLostEventListener(hourSpinner);
-		addFocusLostEventListener(minuteSpinner);
+		this.addFocusLostEventListener(hourSpinner);
+		this.addFocusLostEventListener(minuteSpinner);
 		
-		// set the limits of the hour spinner
-		SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
-		hourValueFactory.setConverter(TIME_FORMAT_CONVERTER);
-		
-		// set the limits of the minute spinner
-		SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
-		minuteValueFactory.setConverter(TIME_FORMAT_CONVERTER);
+		// set the limits of the hour and minute spinners
+		SpinnerValueFactory<Integer> hourValueFactory = createTimeSpinnerValueFactory(0, 23);
+		SpinnerValueFactory<Integer> minuteValueFactory = createTimeSpinnerValueFactory(0, 59);
 		
 		// set wrapping on context TextArea
 		journalContextArea.setWrapText(true);
 		
 		
+		// autofill the field values to the default values
 		// autofill the date
 		datePicker.setValue(LocalDate.now());
 		
@@ -104,6 +98,85 @@ public class CreateController extends SceneController implements Initializable {
 		// initialize time spinners
 		hourSpinner.setValueFactory(hourValueFactory);
 		minuteSpinner.setValueFactory(minuteValueFactory);
+	}
+	
+	
+	/**
+	 * Startup method that configures and sets up all forms on the Create page
+	 * 
+	 * @param journal the JournalModel of the entry to be edited
+	 */
+	public void initializeOldJournal(JournalModel journal) {
+		this.journal = journal;
+		
+		// set the limits of new hour and minute spinners
+		SpinnerValueFactory<Integer> hourValueFactory = createTimeSpinnerValueFactory(0, 23);
+		SpinnerValueFactory<Integer> minuteValueFactory = createTimeSpinnerValueFactory(0, 59);
+		
+		// fill in fields with journal data
+		fillOutFields(journal, hourValueFactory, minuteValueFactory);
+
+		// initialize new time spinner value factories that reflect journal entry data
+		hourSpinner.setValueFactory(hourValueFactory);
+		minuteSpinner.setValueFactory(minuteValueFactory);
+	}
+	
+	
+	/**
+	 * Creates a SpinnerValueFactory given a minimum and maximum value,
+	 * with values of the spinner being padded with 0s to the tens place.
+	 * 
+	 * @param min the minimum value the spinner can contain
+	 * @param max the maximum value the spinner can contain
+	 * @return a SpinnerValueFactory with the given min and max values
+	 */
+	private SpinnerValueFactory<Integer> createTimeSpinnerValueFactory(int min, int max) {
+		SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max);
+		valueFactory.setConverter(TIME_FORMAT_CONVERTER);
+		
+		return valueFactory;
+	}
+	
+	
+	/**
+	 * Populates fields of the Edit page with journal info
+	 * 
+	 * @param journal the JournalModel containing the journal entry's info
+	 * @param hourValueFactory the SpinnerValueFactory for the hour spinner
+	 * @param minuteValueFactory the SpinnerValueFactory for the minute spinner
+	 */
+	private void fillOutFields(JournalModel journal, SpinnerValueFactory<Integer> hourValueFactory, 
+			SpinnerValueFactory<Integer> minuteValueFactory) {
+		
+		// fill out the title
+		titleField.setText(journal.getTitle());
+				
+		// fill out the date
+		LocalDate date = LocalDate.parse(journal.getDate());
+		datePicker.setValue(date);
+				
+		// fill out the time
+		hourValueFactory.setValue(journal.getHour());
+		minuteValueFactory.setValue(journal.getMinute());
+				
+		// fill out the context
+		journalContextArea.setText(journal.getContext());
+	}
+	
+	
+	/**
+	 * Adds an event listener to a spinner that checks if spinners were clicked in/out of
+	 * 
+	 * @param spinner the spinner to add the event listener to
+	 */
+	private void addFocusLostEventListener(Spinner<Integer> spinner) {
+		// addListener takes ChangeListener Functional Interface implementation as argument
+		spinner.getEditor().focusedProperty().addListener((observableValue, previousValue, newValue) -> {
+			// If there is not a new value, reset spinner to default
+			if (!newValue) {
+				spinner.increment(0);
+			}
+		});
 	}
 	
 	
@@ -168,8 +241,14 @@ public class CreateController extends SceneController implements Initializable {
 		String date = enteredDate.toString();
 		
 		// update DB
-		JournalDAO journalDao = new JournalDAO();
-		journalDao.createJournal(title, date, hour, minute, context);
+		JournalDAO journalDAO = new JournalDAO();
+		if (this.journal == null) {
+			journalDAO.createJournal(title, date, hour, minute, context);
+		}
+		else {
+			int journalID = this.journal.getID();
+			journalDAO.updateJournal(journalID, title, date, hour, minute, context);
+		}
 		
 		// display success message (TODO!) and switch to home page
 		super.switchToPrevView(e, View.CREATE);

@@ -3,7 +3,6 @@ package application.controllers;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 import application.dal.JournalDAO;
 import application.models.JournalModel;
