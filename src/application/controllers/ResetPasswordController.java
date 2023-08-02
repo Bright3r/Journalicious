@@ -34,7 +34,7 @@ public class ResetPasswordController extends SceneController implements Initiali
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// fetch security question
-		UserModel user = UserModel.getUserModel();
+		UserModel user = super.getUserModel();
 		String securityQuestion = user.getSecurityQuestion();
 		
 		// update security question label's text
@@ -58,8 +58,8 @@ public class ResetPasswordController extends SceneController implements Initiali
 	 * @param e an event given by some user action on the application.
 	 */
 	public void handleSubmit(ActionEvent e) {
-		UserModel user = UserModel.getUserModel();
-		PasswordModel passwordModel = user.getPasswordModel();
+		UserModel user = super.getUserModel();
+		PasswordModel passwordModel = super.getPasswordModel();
 								
 		// check if new password is valid
 		String newPassword = newPasswordField.getText();

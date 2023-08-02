@@ -172,7 +172,7 @@ public class CreateController extends SceneController implements Initializable {
 	private void addFocusLostEventListener(Spinner<Integer> spinner) {
 		// addListener takes ChangeListener Functional Interface implementation as argument
 		spinner.getEditor().focusedProperty().addListener((observableValue, previousValue, newValue) -> {
-			// If there is not a new value, reset spinner to default
+			// If new value is invalid, reset spinner to default
 			if (!newValue) {
 				spinner.increment(0);
 			}

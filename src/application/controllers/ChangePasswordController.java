@@ -89,8 +89,8 @@ public class ChangePasswordController extends SceneController implements Initial
 	 */
 	public void handleSubmit(ActionEvent e) {
 		// get user and password model
-		UserModel user = UserModel.getUserModel();
-		PasswordModel passwordModel = user.getPasswordModel();
+		UserModel userModel = super.getUserModel();
+		PasswordModel passwordModel = super.getPasswordModel();
 		
 		// check if previous password was incorrect
 		String prevPassword = prevPasswordField.getText();
@@ -128,8 +128,8 @@ public class ChangePasswordController extends SceneController implements Initial
 		
 		
 		// submit fields' data to "DB" (stored in model object's state for now)
-		user.setSecurityQuestion(this.securityQuestion);
-		user.setSecurityQuestionAnswer(securityQuestionAnswer);
+		userModel.setSecurityQuestion(this.securityQuestion);
+		userModel.setSecurityQuestionAnswer(securityQuestionAnswer);
 		passwordModel.setPassword(newPassword);
 		
 		// display success message (TODO!) and redirect to home page

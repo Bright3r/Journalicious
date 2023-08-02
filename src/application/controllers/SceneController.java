@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import application.models.JournalModel;
+import application.models.PasswordModel;
+import application.models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -19,8 +21,27 @@ import javafx.stage.Stage;
 public class SceneController {
 	private static final String viewPackagePath = "resources/views/";
 	
-	// static class variable to avoid being reset upon re-instantiation
+	// static class variables to avoid being reset upon re-instantiation
 	private static View prevView;
+	
+	private UserModel userModel;
+	private PasswordModel passwordModel;
+	
+	
+	public SceneController() {
+		this.userModel = new UserModel();
+		this.passwordModel = new PasswordModel();
+	}
+	
+	
+	public UserModel getUserModel() {
+		return this.userModel;
+	}
+	
+	public PasswordModel getPasswordModel() {
+		return this.passwordModel;
+	}
+
 	
 	private static void setPrevView(View view) {
 		prevView = view;

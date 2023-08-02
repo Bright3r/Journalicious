@@ -2,47 +2,28 @@ package application.models;
 
 import application.dal.UserDAO;
 
-/**
- * A class that maintains data related to user info.
- * Singleton class to provide global access and prevent
- * multiple users from being created.
- */
-public class UserModel {
-	private static UserModel userModel = new UserModel();
-	private static PasswordModel passwordModel = new PasswordModel();
 
-	private static String securityQuestion;
-	private static String securityQuestionAnswer;
+public class UserModel {	
+	private UserDAO userDAO;
 	
-
-	private UserModel() {
-		UserDAO user = new UserDAO();
-		securityQuestion = user.getSecurityQuestion();
-		securityQuestionAnswer = user.getSecurityQuestionAnswer();
+	private String securityQuestion;
+	private String securityQuestionAnswer;
+	
+	public UserModel() {
+		this.userDAO = new UserDAO();
+		
+		this.initializeSecurityQuestion();
+		this.initializeSecurityQuestionAnswer();
 	}
 	
 	
-	/**
-	 * Gets the Singleton instance of the User Model.
-	 * 
-	 * @return a instance of the UserModel Singleton
-	 */
-	public static UserModel getUserModel() {
-		return userModel;
+	private void initializeSecurityQuestion() {
+		this.securityQuestion = this.userDAO.getSecurityQuestion();
 	}
 	
-
-	/**
-	 * Gets the Password Model associated with the User.
-	 * Password Model should always be accessed through the
-	 * User Model to ensure password info is up to date.
-	 * 
-	 * @return the Password Model representing the user's password
-	 */
-	public PasswordModel getPasswordModel() {
-		return passwordModel;
+	private void initializeSecurityQuestionAnswer() {
+		this.securityQuestionAnswer = this.userDAO.getSecurityQuestionAnswer();
 	}
-	
 	
 	/**
 	 * Overwrites the user's security question to a new question
@@ -51,11 +32,10 @@ public class UserModel {
 	 */
 	public void setSecurityQuestion(String newSecurityQuestion) {
 		// update in DB
-		UserDAO user = new UserDAO();
-		user.setSecurityQuestion(newSecurityQuestion);
+		this.userDAO.setSecurityQuestion(newSecurityQuestion);
 		
 		// update model
-		securityQuestion = newSecurityQuestion;
+		this.securityQuestion = newSecurityQuestion;
 	}
 	
 	
@@ -76,11 +56,10 @@ public class UserModel {
 	 */
 	public void setSecurityQuestionAnswer(String answer) {
 		// update in DB
-		UserDAO user = new UserDAO();
-		user.setSecurityQuestionAnswer(answer);
+		this.userDAO.setSecurityQuestionAnswer(answer);
 		
 		// update model
-		securityQuestionAnswer = answer;
+		this.securityQuestionAnswer = answer;
 	}
 	
 	
@@ -91,7 +70,7 @@ public class UserModel {
 	 * @return Returns true if the entered answer matches the answer to the security questions. Otherwise, returns false.
 	 */
 	public boolean isCorrectSecurityQuestionAnswer(String enteredAnswer) {
-		boolean answerIsCorrect = enteredAnswer.equals(securityQuestionAnswer);
+		boolean answerIsCorrect = enteredAnswer.equals(this.securityQuestionAnswer);
 		
 		return answerIsCorrect;
 	}
