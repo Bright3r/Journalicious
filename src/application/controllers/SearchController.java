@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import application.dal.JournalDAO;
 import application.models.JournalModel;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -99,8 +98,7 @@ public class SearchController extends SceneController implements Initializable {
 		
 		if (journal != null) {
 			// delete journal from db
-			JournalDAO journalDAO = new JournalDAO();
-			journalDAO.deleteJournal(journal);
+			journal.deleteSelf();
 			
 			// update observable list to reflect deletion
 			this.journalsObsList.remove(journal);
@@ -173,8 +171,7 @@ public class SearchController extends SceneController implements Initializable {
 	
 	
 	private void updateJournalsObsListByKeyword(String keyword) {
-		JournalDAO journalDAO = new JournalDAO();
-		ArrayList<JournalModel> userJournals = journalDAO.getJournals(keyword);
+		ArrayList<JournalModel> userJournals = JournalModel.getJournals(keyword);
 		
 		this.journalsObsList.clear();
 		this.journalsObsList.addAll(userJournals);
@@ -182,8 +179,7 @@ public class SearchController extends SceneController implements Initializable {
 	
 	
 	private void resetJournalsObsList() {
-		JournalDAO journalDAO = new JournalDAO();
-		ArrayList<JournalModel> userJournals = journalDAO.getJournals();
+		ArrayList<JournalModel> userJournals = JournalModel.getJournals();
 		
 		this.journalsObsList.clear();
 		this.journalsObsList.addAll(userJournals);

@@ -170,7 +170,7 @@ public class JournalDAO {
 	 * @param minute the minute of the time the journal entry was written
 	 * @param context the context or body of the journal entry
 	 */
-	public void updateJournal(int id, String title, String date, int hour, int minute, String context) {
+	public void updateJournal(JournalModel journal) {
 		String updateQuery = "UPDATE journal SET title = ?, date = ?, hour = ?, minute = ?, context = ? WHERE id = ?";
 		
 		try {
@@ -178,12 +178,12 @@ public class JournalDAO {
 			Connection connection = DBConnection.getDBConnection(Database.JOURNALS);
 			PreparedStatement statement = connection.prepareStatement(updateQuery);
 		
-			statement.setString(1, title);
-			statement.setString(2, date);
-			statement.setInt(3, hour);
-			statement.setInt(4, minute);
-			statement.setString(5, context);
-			statement.setInt(6, id);
+			statement.setString(1, journal.getTitle());
+			statement.setString(2, journal.getDate());
+			statement.setInt(3, journal.getHour());
+			statement.setInt(4, journal.getMinute());
+			statement.setString(5, journal.getContext());
+			statement.setInt(6, journal.getID());
 			
 			int rowsAdded = statement.executeUpdate();
 			if (rowsAdded > 0) {

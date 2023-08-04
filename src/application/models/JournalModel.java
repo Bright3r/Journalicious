@@ -1,5 +1,9 @@
 package application.models;
 
+import java.util.ArrayList;
+
+import application.dal.JournalDAO;
+
 /**
  * A class representing a journal entry in the application
  */
@@ -94,6 +98,74 @@ public class JournalModel {
 	 */
 	public int getID() {
 		return this.id;
+	}
+	
+	
+	/**
+	 * Updates the journal model's state and updates the DB to reflect these changes
+	 * 
+	 * @param title the title of the journal entry
+	 * @param date the date of the journal entry
+	 * @param hour the hour of the time the journal entry was written
+	 * @param minute the minute of the time the journal entry was written
+	 * @param context the context or body of the journal entry
+	 */
+	public void updateSelf(String title, String date, int hour, int minute, String context) {
+		this.title = title;
+		this.date = date;
+		this.hour = hour;
+		this.minute = minute;
+		this.context = context;
+		
+		JournalDAO journalDAO = new JournalDAO();
+		journalDAO.updateJournal(this);
+	}
+	
+	
+	/**
+	 * Creates a new journal entry and adds the entry into the DB
+	 * 
+	 * @param title the title of the journal entry
+	 * @param date the date of the journal entry
+	 * @param hour the hour of the time the journal entry was written
+	 * @param minute the minute of the time the journal entry was written
+	 * @param context the context or body of the journal entry
+	 */
+	public static void createJournal(String title, String date, int hour, int minute, String context) {
+		JournalDAO journalDAO = new JournalDAO();
+		journalDAO.createJournal(title, date, hour, minute, context);
+	}
+	
+	
+	/**
+	 * Deletes this journal entry from the DB
+	 */
+	public void deleteSelf() {
+		JournalDAO journalDAO = new JournalDAO();
+		journalDAO.deleteJournal(this);
+	}
+	
+	
+	/**
+	 * Gets all journal entries that are stored in the DB
+	 * 
+	 * @return an ArrayList containing a JournalModel for every journal in the DB
+	 */
+	public static ArrayList<JournalModel> getJournals() {
+		JournalDAO journalDAO = new JournalDAO();
+		return journalDAO.getJournals();
+	}
+	
+	
+	/**
+	 * Gets all journal entries in the DB that contain a given keyword in the title or context
+	 * 
+	 * @param keyword the keyword that a journal entry must contain
+	 * @return an ArrayList containing a JournalModel for every journal entry in the DB that contains the given keyword
+	 */
+	public static ArrayList<JournalModel> getJournals(String keyword) {
+		JournalDAO journalDAO = new JournalDAO();
+		return journalDAO.getJournals(keyword);
 	}
 	
 }

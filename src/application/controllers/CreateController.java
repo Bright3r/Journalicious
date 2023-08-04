@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
-import application.dal.JournalDAO;
 import application.models.JournalModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -241,13 +240,13 @@ public class CreateController extends SceneController implements Initializable {
 		String date = enteredDate.toString();
 		
 		// update DB
-		JournalDAO journalDAO = new JournalDAO();
 		if (this.journal == null) {
-			journalDAO.createJournal(title, date, hour, minute, context);
+			// create new journal
+			JournalModel.createJournal(title, date, hour, minute, context);
 		}
 		else {
-			int journalID = this.journal.getID();
-			journalDAO.updateJournal(journalID, title, date, hour, minute, context);
+			// update journal model and DB
+			this.journal.updateSelf(title, date, hour, minute, context);
 		}
 		
 		// display success message (TODO!) and switch to home page

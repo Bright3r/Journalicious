@@ -2,10 +2,8 @@ package application.models;
 
 import application.dal.UserDAO;
 
-
 public class UserModel {	
 	private UserDAO userDAO;
-	
 	private String securityQuestion;
 	private String securityQuestionAnswer;
 	

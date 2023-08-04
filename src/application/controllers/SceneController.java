@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 public class SceneController {
 	private static final String viewPackagePath = "resources/views/";
 	
-	// static class variables to avoid being reset upon re-instantiation
+	// static class variable to avoid being reset upon re-instantiation
 	private static View prevView;
 	
 	private UserModel userModel;
