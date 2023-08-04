@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import application.dal.DBConnection.Database;
+import application.models.UserModel;
 
 /**
  * A class that faciliates the interaction and manipulation of user data
@@ -19,7 +20,7 @@ public class UserDAO {
 	 * 
 	 * @return the user's security question
 	 */
-	public String getSecurityQuestion() {
+	private String getSecurityQuestion() {
 		String query = "SELECT * FROM user_info WHERE id = ?";
 		String securityQuestion = "";
 		
@@ -75,7 +76,7 @@ public class UserDAO {
 	 * 
 	 * @return the answer to the user's security question
 	 */
-	public String getSecurityQuestionAnswer() {
+	private String getSecurityQuestionAnswer() {
 		String query = "SELECT * FROM user_info WHERE id = ?";
 		String securityQuestionAnswer = "";
 		
@@ -123,5 +124,21 @@ public class UserDAO {
 			System.out.println("Failed to update security question answer in " + Database.USER_INFO.getValue() + "!");
 			e.printStackTrace();
 		}
+	}
+	
+	
+	/**
+	 * Updates a given UserModel to reflect the user info stored in DB
+	 * 
+	 * @param user the UserModel to be updated
+	 */
+	public void updateUserModel(UserModel user) {
+		// get user info from DB
+		String securityQuestion = this.getSecurityQuestion();
+		String securityQuestionAnswer = this.getSecurityQuestionAnswer();
+		
+		// update model to reflect information in DB
+		user.setSecurityQuestion(securityQuestion);
+		user.setSecurityQuestionAnswer(securityQuestionAnswer);
 	}
 }

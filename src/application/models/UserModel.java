@@ -7,21 +7,21 @@ public class UserModel {
 	private String securityQuestion;
 	private String securityQuestionAnswer;
 	
+	
+	/**
+	 * Creates a new user model
+	 */
 	public UserModel() {
 		this.userDAO = new UserDAO();
 		
-		this.initializeSecurityQuestion();
-		this.initializeSecurityQuestionAnswer();
+		this.initializeModel();
 	}
 	
 	
-	private void initializeSecurityQuestion() {
-		this.securityQuestion = this.userDAO.getSecurityQuestion();
+	private void initializeModel() {
+		this.userDAO.updateUserModel(this);
 	}
 	
-	private void initializeSecurityQuestionAnswer() {
-		this.securityQuestionAnswer = this.userDAO.getSecurityQuestionAnswer();
-	}
 	
 	/**
 	 * Overwrites the user's security question to a new question
