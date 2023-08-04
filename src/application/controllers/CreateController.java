@@ -22,16 +22,10 @@ import javafx.util.StringConverter;
  * Controller for the "Create" and "Edit" scenes.
  */
 public class CreateController extends SceneController implements Initializable {
-	@FXML private TextField titleField;
-	@FXML private DatePicker datePicker;
-	@FXML private Spinner<Integer> hourSpinner;
-	@FXML private Spinner<Integer> minuteSpinner;
-	@FXML private TextArea journalContextArea;
-		
 	/**
 	 * A custom string converter object that formats times
 	 */
-	static final StringConverter<Integer> TIME_FORMAT_CONVERTER = new StringConverter<Integer>() {
+	private static final StringConverter<Integer> TIME_FORMAT_CONVERTER = new StringConverter<Integer>() {
 		@Override
 		public String toString(Integer val) {
 			// pad the time element's value with 0s if it is a single digit
@@ -50,8 +44,12 @@ public class CreateController extends SceneController implements Initializable {
 		}
 	};
 	
+	@FXML private TextField titleField;
+	@FXML private DatePicker datePicker;
+	@FXML private Spinner<Integer> hourSpinner;
+	@FXML private Spinner<Integer> minuteSpinner;
+	@FXML private TextArea journalContextArea;	
 	
-	// instance vars
 	private JournalModel journal;
 	
 	
@@ -249,7 +247,7 @@ public class CreateController extends SceneController implements Initializable {
 			this.journal.updateSelf(title, date, hour, minute, context);
 		}
 		
-		// display success message (TODO!) and switch to home page
+		// switch to home page
 		super.switchToPrevView(e, View.CREATE);
 	}	
 }

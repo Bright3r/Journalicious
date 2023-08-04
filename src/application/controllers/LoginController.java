@@ -32,7 +32,6 @@ public class LoginController extends SceneController implements Initializable {
 	 * @param e an event given by some user action on the application
 	 */
 	public void handleLoginAttempt(ActionEvent e) {		
-		UserModel user = super.getUserModel();
 		PasswordModel passwordModel = super.getPasswordModel();
 		
 		// logs in user, redirecting them to the next page
@@ -95,7 +94,6 @@ public class LoginController extends SceneController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		UserModel user = super.getUserModel();
 		PasswordModel passwordModel = super.getPasswordModel();
 		
 		// if first time user, hide reset password and remind them about default password

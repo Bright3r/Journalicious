@@ -25,14 +25,13 @@ public class UserDAO {
 		String securityQuestion = "";
 		
 		try {
-			
+			// get DB connection
 			Connection connection = DBConnection.getDBConnection(Database.USER_INFO);
 			PreparedStatement statement = connection.prepareStatement(query);
 			
 			statement.setString(1, USER_INFO_ROW_ID);
 			
 			ResultSet queryOutput = statement.executeQuery();
-			
 			if (queryOutput.next()) {
 				securityQuestion = queryOutput.getString("security_question");
 			}
@@ -55,7 +54,7 @@ public class UserDAO {
 		String updateQuery = "UPDATE user_info SET security_question = ? WHERE id = ?";
 		
 		try {
-			
+			// get DB connection
 			Connection connection = DBConnection.getDBConnection(Database.USER_INFO);
 			PreparedStatement statement = connection.prepareStatement(updateQuery);
 			
@@ -81,14 +80,13 @@ public class UserDAO {
 		String securityQuestionAnswer = "";
 		
 		try {
-			
+			// get DB connection
 			Connection connection = DBConnection.getDBConnection(Database.USER_INFO);
 			PreparedStatement statement = connection.prepareStatement(query);
 			
 			statement.setString(1, USER_INFO_ROW_ID);
 			
 			ResultSet queryOutput = statement.executeQuery();
-			
 			if (queryOutput.next()) {
 				securityQuestionAnswer = queryOutput.getString("security_question_answer");
 			}
@@ -111,7 +109,7 @@ public class UserDAO {
 		String updateQuery = "UPDATE user_info SET security_question_answer = ? WHERE id = ?";
 		
 		try {
-			
+			// get DB connection
 			Connection connection = DBConnection.getDBConnection(Database.USER_INFO);
 			PreparedStatement statement = connection.prepareStatement(updateQuery);
 			

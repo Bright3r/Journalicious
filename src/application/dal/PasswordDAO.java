@@ -25,7 +25,7 @@ public class PasswordDAO {
 	public void updatePassword(PasswordModel passwordModel) {
 		String password = "";
 		try (Scanner in = new Scanner(passFile)) {	
-			
+			// get password from file
 			if (in.hasNextLine()) {
 				password = in.nextLine();
 			}
@@ -35,6 +35,7 @@ public class PasswordDAO {
 			e.printStackTrace();
 		}
 		
+		// update password model
 		passwordModel.setPassword(password);
 	}
 	
@@ -51,7 +52,7 @@ public class PasswordDAO {
 		}
 		
 		try (FileWriter writer = new FileWriter(passFile)) {
-
+			// write new password to file
 			writer.write(newPassword);
 			
 		} catch (IOException e) {

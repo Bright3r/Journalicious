@@ -19,7 +19,7 @@ public class Main extends Application {
 		try {
 			
 			Scene scene = SceneController.getInitialScene();
-			
+
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Journalicious");
 			primaryStage.show();

@@ -207,9 +207,12 @@ public class SearchController extends SceneController implements Initializable {
 		private static final int TITLE_FONT_SIZE = 15;
 		private static final int DEFAULT_FONT_SIZE = 12;
 		
-		// spacing constants
+		// sizing and spacing constants
 		private static final int CELL_WIDTH = 200;
 		private static final int CELL_SPACING = 10;
+		private static final int CONTEXT_WIDTH = 300;
+		private static final int CONTAINER_VERTICAL_PADDING = 5;
+		private static final int CONTAINER_SPACING = 15;
 		
 		private JournalCell() {
 			radioBtn = new RadioButton();
@@ -245,13 +248,13 @@ public class SearchController extends SceneController implements Initializable {
 			// journal content
 			journalContentContainer = new VBox(context);
 			context.setWrapText(true); 
-			context.setMaxWidth(300);
+			context.setMaxWidth(CONTEXT_WIDTH);
 			
 			// parent container
 			container = new HBox(radioBtn, journalInfoContainer, journalContentContainer);
 			// sizing and spacing
-			container.setPadding(new Insets(5, 0, 5, 0));
-			container.setSpacing(15);
+			container.setPadding(new Insets(CONTAINER_VERTICAL_PADDING, 0, CONTAINER_VERTICAL_PADDING, 0));
+			container.setSpacing(CONTAINER_SPACING);
 		}
 		
 		

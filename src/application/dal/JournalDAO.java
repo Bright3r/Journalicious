@@ -26,10 +26,11 @@ public class JournalDAO {
 		String updateQuery = "INSERT INTO journal (title, date, hour, minute, context) VALUES (?, ?, ?, ?, ?)";
 		
 		try {
-			
+			// get DB connection
 			Connection connection = DBConnection.getDBConnection(Database.JOURNALS);
 			PreparedStatement statement = connection.prepareStatement(updateQuery);
 			
+			// configure query
 			statement.setString(1, title);
 			statement.setString(2, date);
 			statement.setInt(3, hour);
@@ -61,7 +62,7 @@ public class JournalDAO {
 		String query = "SELECT * FROM journal";
 		
 		try {
-			
+			// get DB connection
 			Connection connection = DBConnection.getDBConnection(Database.JOURNALS);
 			Statement statement = connection.createStatement();
 			
@@ -99,7 +100,7 @@ public class JournalDAO {
 		String updateQuery = "SELECT * FROM journal WHERE title LIKE ? OR context LIKE ?";
 		
 		try {
-			
+			// get DB connection
 			Connection connection = DBConnection.getDBConnection(Database.JOURNALS);
 			PreparedStatement statement = connection.prepareStatement(updateQuery);
 			
@@ -141,7 +142,7 @@ public class JournalDAO {
 		int id = journal.getID();
 		
 		try {
-			
+			// get DB connection
 			Connection connection = DBConnection.getDBConnection(Database.JOURNALS);
 			PreparedStatement statement = connection.prepareStatement(updateQuery);
 			
@@ -163,21 +164,17 @@ public class JournalDAO {
 	/**
 	 * Updates an existing journal entry within the DB
 	 * 
-	 * @param id the id of the journal entry in the sqlite DB
-	 * @param title the title of the journal entry
-	 * @param date the date of the journal entry
-	 * @param hour the hour of the time the journal entry was written
-	 * @param minute the minute of the time the journal entry was written
-	 * @param context the context or body of the journal entry
+	 * @param journal the JournalModel representing the journal we would like to update in the DB
 	 */
 	public void updateJournal(JournalModel journal) {
 		String updateQuery = "UPDATE journal SET title = ?, date = ?, hour = ?, minute = ?, context = ? WHERE id = ?";
 		
 		try {
-			
+			// get DB connection
 			Connection connection = DBConnection.getDBConnection(Database.JOURNALS);
 			PreparedStatement statement = connection.prepareStatement(updateQuery);
-		
+			
+			// configure query
 			statement.setString(1, journal.getTitle());
 			statement.setString(2, journal.getDate());
 			statement.setInt(3, journal.getHour());

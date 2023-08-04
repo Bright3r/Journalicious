@@ -85,7 +85,7 @@ public class ResetPasswordController extends SceneController implements Initiali
 		// update DB
 		passwordModel.setPassword(newPassword);
 		
-		// display success message (TODO!) and switch to home view
+		// switch to home view
 		super.switchToView(e, View.HOME, View.RESET_PASSWORD);
 	}
 	

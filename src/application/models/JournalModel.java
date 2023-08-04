@@ -15,6 +15,7 @@ public class JournalModel {
 	private int minute;
 	private String context;
 	
+	
 	/**
 	 * Constructs a new journal entry
 	 * 
@@ -44,6 +45,7 @@ public class JournalModel {
 		return this.title;
 	}
 	
+	
 	/**
 	 * Gets the date of the journal entry
 	 * 
@@ -53,6 +55,7 @@ public class JournalModel {
 		return this.date;
 	}
 	
+	
 	/**
 	 * Gets a string representation of the time of the journal entry
 	 * 
@@ -61,6 +64,7 @@ public class JournalModel {
 	public String getTime() {
 		return String.format("%02d:%02d", this.hour, this.minute);
 	}
+	
 	
 	/**
 	 * Gets the hour of the time the journal entry was written
@@ -90,6 +94,7 @@ public class JournalModel {
 	public String getContext() {
 		return this.context;
 	}
+	
 	
 	/**
 	 * Gets the DB id of the journal entry

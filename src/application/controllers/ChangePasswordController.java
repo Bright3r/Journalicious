@@ -132,7 +132,7 @@ public class ChangePasswordController extends SceneController implements Initial
 		userModel.setSecurityQuestionAnswer(securityQuestionAnswer);
 		passwordModel.setPassword(newPassword);
 		
-		// display success message (TODO!) and redirect to home page
+		// redirect to home page
 		super.switchToView(e, View.HOME, View.CHANGE_PASSWORD);
 	}
 	

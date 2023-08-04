@@ -13,12 +13,7 @@ public class UserModel {
 	 */
 	public UserModel() {
 		this.userDAO = new UserDAO();
-		
-		this.initializeModel();
-	}
-	
-	
-	private void initializeModel() {
+		// update model to reflect DB
 		this.userDAO.updateUserModel(this);
 	}
 	
@@ -69,7 +64,6 @@ public class UserModel {
 	 */
 	public boolean isCorrectSecurityQuestionAnswer(String enteredAnswer) {
 		boolean answerIsCorrect = enteredAnswer.equals(this.securityQuestionAnswer);
-		
 		return answerIsCorrect;
 	}
 }

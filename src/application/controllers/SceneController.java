@@ -28,25 +28,50 @@ public class SceneController {
 	private PasswordModel passwordModel;
 	
 	
+	/**
+	 * Creates new SceneController
+	 */
 	public SceneController() {
 		this.userModel = new UserModel();
 		this.passwordModel = new PasswordModel();
 	}
 	
 	
+	/**
+	 * Gets the UserModel representing the user's info
+	 * 
+	 * @return a UserModel representing the user's info
+	 */
 	public UserModel getUserModel() {
 		return this.userModel;
 	}
 	
+	
+	/**
+	 * Gets the PasswordModel representing the user's password
+	 * 
+	 * @return a PasswordModel representing the user's password
+	 */
 	public PasswordModel getPasswordModel() {
 		return this.passwordModel;
 	}
 
 	
+	/**
+	 * Changes the previous view of the application to a specified view
+	 * 
+	 * @param view the new previous view
+	 */
 	private static void setPrevView(View view) {
 		prevView = view;
 	}
 	
+	
+	/**
+	 * Gets the previous view of our application
+	 * 
+	 * @return the previous view of our application
+	 */
 	private static View getPrevView() {
 		return prevView;
 	}
@@ -85,14 +110,10 @@ public class SceneController {
 			String viewPath = viewPackagePath + view.getValue();
 			File viewFile = new File(viewPath);
 			BorderPane root = FXMLLoader.load(viewFile.toURI().toURL());
-			Scene scene = new Scene(root);
 			
-			// Get event source so primary stage can be retrieved
-			// then show the new scene on the stage
-			Node source = (Node) e.getSource();
-			Stage stage = (Stage) source.getScene().getWindow();
-			stage.setScene(scene);
-			stage.show();
+			// set scene on stage
+			Scene scene = new Scene(root);
+			this.updateStageScene(e, scene);
 			
 		} catch (IOException ex) {
 			System.out.println("Failed to switch scene");
@@ -103,7 +124,8 @@ public class SceneController {
 	
 	
 	/**
-	 * Handles the logic for switching from the Search Page to the Edit Page
+	 * Handles the logic for switching from the Search Page to the Edit Page.
+	 * This separate method is needed because Edit is a special case of the Create Page.
 	 * 
 	 * @param e an event given by some user action on the application 
 	 * @param journal the journal entry to populate the edit page with
@@ -118,25 +140,35 @@ public class SceneController {
 			FXMLLoader loader = new FXMLLoader(viewFile.toURI().toURL());
 			BorderPane root = loader.load();
 			
-			// initalize the data on the page
+			// initalize the journal data on the page
 			CreateController controller = loader.getController();
 			controller.initializeOldJournal(journal);
 			
-			// set scene
+			// set scene on stage
 			Scene scene = new Scene(root);
-			
-			// Get event source so primary stage can be retrieved
-			// then show the new scene on the stage
-			Node source = (Node) e.getSource();
-			Stage stage = (Stage) source.getScene().getWindow();
-			stage.setScene(scene);
-			stage.show();
+			this.updateStageScene(e, scene);
 			
 		} catch (IOException ex) {
 			System.out.println("Failed to switch scene");
 			System.out.println(ex.getMessage());
 			ex.printStackTrace();
 		}
+	}
+	
+	
+	/**
+	 * Updates the scene being displayed on the application's stage
+	 * 
+	 * @param e an event given by some user action on the application
+	 * @param scene the scene to be shown on the stage
+	 */
+	private void updateStageScene(ActionEvent e, Scene scene) {
+		// Get event source so primary stage can be retrieved
+		// then show the new scene on the stage
+		Node source = (Node) e.getSource();
+		Stage stage = (Stage) source.getScene().getWindow();
+		stage.setScene(scene);
+		stage.show();
 	}
 	
 	

@@ -10,7 +10,6 @@ public class DBConnection {
 	private static final String jdbcPathURL = "jdbc:sqlite:resources/sqlite/";
 	
 	private static DBConnection dbConnection = new DBConnection();
-	
 	private static Connection userInfoDBConnection;
 	private static Connection journalsDBConnection;
 	
@@ -20,12 +19,11 @@ public class DBConnection {
 	 */
 	private DBConnection() {
 		try {
-	
+			// get a connection to each database
 			userInfoDBConnection = DriverManager.getConnection(jdbcPathURL + Database.USER_INFO.getValue());
 			journalsDBConnection = DriverManager.getConnection(jdbcPathURL + Database.JOURNALS.getValue());
 			
 		} catch (Exception ex) {
-			
 			System.out.println("Failed to connect to SQLite database");
 			ex.printStackTrace();
 		}

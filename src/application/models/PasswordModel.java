@@ -3,9 +3,8 @@ package application.models;
 import application.dal.PasswordDAO;
 
 /**
- * A class representing a Password for the application,
- * handles the logic related to checking passwords and 
- * changing passwords 
+ * A class representing a Password for the application, handles the logic 
+ * related to checking and changing passwords 
  */
 public class PasswordModel {
 	private static final String DEFAULT_PASSWORD = "p";
@@ -14,16 +13,15 @@ public class PasswordModel {
 	private String password;
 	
 	
+	/**
+	 * Create a new PasswordModel and updates it to reflect DB
+	 */
 	public PasswordModel() {
 		this.passDAO = new PasswordDAO();
-		
-		this.initializePassword();
-	}
-	
-	
-	private void initializePassword() {
+		// update password model to reflect DB
 		this.passDAO.updatePassword(this);
 	}
+	
 	
 	/**
 	 * Changes the password stored in the system
@@ -34,17 +32,8 @@ public class PasswordModel {
 		// change password in flat files
 		this.passDAO.setPassword(newPassword);
 		
-		// Redundantly change password in model (already updated when getting password)
+		// change password in model
 		this.password = newPassword;
-	}
-	
-	
-	private String getPassword() {
-		// update current password to match flat files
-		this.passDAO.updatePassword(this);
-		
-		// return current password
-		return this.password;
 	}
 	
 	
@@ -54,9 +43,7 @@ public class PasswordModel {
 	 * @return a boolean indicating whether user is a first time user
 	 */
 	public boolean isFirstTimeUser() {
-		String password = this.getPassword();
-		boolean passwordIsDefault = password.equals(DEFAULT_PASSWORD);
-		
+		boolean passwordIsDefault = this.password.equals(DEFAULT_PASSWORD);
 		return passwordIsDefault;
 	}
 	
@@ -68,9 +55,7 @@ public class PasswordModel {
 	 * @return a boolean indicating if the user entered the correct password
 	 */
 	public boolean isCorrectPassword(String enteredPassword) {
-		String password = this.getPassword();
-		boolean passwordIsCorrect = enteredPassword.equals(password);
-		
+		boolean passwordIsCorrect = this.password.equals(enteredPassword);
 		return passwordIsCorrect;
 	}
 	
@@ -83,7 +68,6 @@ public class PasswordModel {
 	 */
 	public boolean isValidNewPassword(String newPassword) {
 		boolean passwordIsValid = !newPassword.equals(DEFAULT_PASSWORD);
-
 		return passwordIsValid;
 	}
 	
