@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.models.PasswordModel;
-import application.models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,10 +32,10 @@ public class LoginController extends SceneController implements Initializable {
 	 */
 	public void handleLoginAttempt(ActionEvent e) {		
 		PasswordModel passwordModel = super.getPasswordModel();
-		
-		// logs in user, redirecting them to the next page
 		String enteredPassword = passwordField.getText();
-		if (passwordModel.isCorrectPassword(enteredPassword)) {
+		
+		boolean passwordIsCorrect = passwordModel.isCorrectPassword(enteredPassword);
+		if (passwordIsCorrect) {
 			// first time users must go to change password
 			if (passwordModel.isFirstTimeUser()) {
 				super.switchToView(e, View.CHANGE_PASSWORD, View.LOGIN);
@@ -50,14 +49,23 @@ public class LoginController extends SceneController implements Initializable {
 		else {
 			// reset password field
 			passwordField.setText("");
-			
 			// display error message depending on user status
-			if (!passwordModel.isFirstTimeUser()) {
-				errorMsgLbl.setText("Error: Password is invalid");
-			}
-			else {
-				errorMsgLbl.setText("Error: Invalid Password. Please enter the default password \"p\"");
-			}
+			displayErrorMsg(passwordModel);
+		}
+	}
+	
+	
+	/**
+	 * Displays an error message on the screen depending on the user's login status
+	 * 
+	 * @param passwordModel the PasswordModel representing the user's current password
+	 */
+	private void displayErrorMsg(PasswordModel passwordModel) {
+		if (!passwordModel.isFirstTimeUser()) {
+			errorMsgLbl.setText("Error: Password is invalid");
+		}
+		else {
+			errorMsgLbl.setText("Error: Invalid Password. Please enter the default password \"p\"");
 		}
 	}
 
