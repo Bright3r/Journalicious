@@ -9,7 +9,7 @@ import java.util.Scanner;
 import application.models.PasswordModel;
 
 /**
- * A class that faciliates the interaction and manipulation of password data
+ * A class that facilitates the interaction and manipulation of password data
  * within the flat files
  */
 public class PasswordDAO {

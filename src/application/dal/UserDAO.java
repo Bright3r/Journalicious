@@ -8,7 +8,7 @@ import application.dal.DBConnection.Database;
 import application.models.UserModel;
 
 /**
- * A class that faciliates the interaction and manipulation of user data
+ * A class that facilitates the interaction and manipulation of user data
  */
 public class UserDAO {
 	// the id for the row where user info is stored in DB
