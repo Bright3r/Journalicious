@@ -58,7 +58,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ListView fx:id="journalListView" prefHeight="204.0" prefWidth="571.0">
+            <ListView fx:id="journalListView" focusTraversable="false" prefHeight="204.0" prefWidth="571.0">
                <VBox.margin>
                   <Insets left="15.0" />
                </VBox.margin>

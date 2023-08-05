@@ -158,8 +158,8 @@ public class SearchController extends SceneController implements Initializable {
 	public void handleSearch(ActionEvent e) {
 		// get search keyword
 		String keyword = searchTextField.getText();
-		boolean keywordIsEmpty = keyword.equals("");
 		
+		boolean keywordIsEmpty = keyword.equals("");
 		if (!keywordIsEmpty) {
 			updateJournalsObsListByKeyword(keyword);
 		}
@@ -210,7 +210,7 @@ public class SearchController extends SceneController implements Initializable {
 		// sizing and spacing constants
 		private static final int CELL_WIDTH = 200;
 		private static final int CELL_SPACING = 10;
-		private static final int CONTEXT_WIDTH = 300;
+		private static final int CONTEXT_WIDTH = 290;
 		private static final int CONTAINER_VERTICAL_PADDING = 5;
 		private static final int CONTAINER_SPACING = 15;
 		
@@ -318,7 +318,7 @@ public class SearchController extends SceneController implements Initializable {
 					String previewText = journal.getContext();
 					context.setText(previewText);
 					// set max height to height of parent container
-					context.setMaxHeight(container.getHeight());
+					context.setMaxHeight(journalInfoContainer.getHeight());
 				});
 				
 				// make the cell visible
