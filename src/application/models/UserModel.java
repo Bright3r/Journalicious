@@ -2,6 +2,10 @@ package application.models;
 
 import application.dal.UserDAO;
 
+/**
+ * A class representing user data, handles logic related to
+ * checking and changing the stored user info
+ */
 public class UserModel {	
 	private UserDAO userDAO;
 	private String securityQuestion;

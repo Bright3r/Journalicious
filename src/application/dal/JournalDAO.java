@@ -10,7 +10,7 @@ import application.dal.DBConnection.Database;
 import application.models.JournalModel;
 
 /**
- * A class that faciliates interacting with and manipulating journal data
+ * A class that facilitates interacting with and manipulating journal data
  */
 public class JournalDAO {
 	/**
