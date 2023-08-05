@@ -112,7 +112,7 @@ public class JournalDAO {
 			// iterate through every row in journals db
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
-				// get column date from row in db
+				// get column data from row in db
 				int id = results.getInt("id");
 				String title = results.getString("title");
 				String date = results.getString("date");

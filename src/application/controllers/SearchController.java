@@ -127,7 +127,7 @@ public class SearchController extends SceneController implements Initializable {
 	
 	
 	/**
-	 * Handles mouse clicks on the "Search" screen.
+	 * Handles logic for clicking the "Back" button
 	 * 
 	 * @param e An event given by some user action on the application.
 	 */

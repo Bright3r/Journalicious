@@ -43,7 +43,7 @@ public class ResetPasswordController extends SceneController implements Initiali
 	
 	
 	/**
-	 * Handles clicks on "Reset Password" screen.
+	 * Handles logic for clicking "Back" button
 	 * 
 	 * @param e An event given by some user action on the application.
 	 */

@@ -76,8 +76,8 @@ public class CreateController extends SceneController implements Initializable {
 		this.addFocusLostEventListener(minuteSpinner);
 		
 		// set the limits of the hour and minute spinners
-		SpinnerValueFactory<Integer> hourValueFactory = createTimeSpinnerValueFactory(0, 23);
-		SpinnerValueFactory<Integer> minuteValueFactory = createTimeSpinnerValueFactory(0, 59);
+		SpinnerValueFactory<Integer> hourValueFactory = this.createTimeSpinnerValueFactory(0, 23);
+		SpinnerValueFactory<Integer> minuteValueFactory = this.createTimeSpinnerValueFactory(0, 59);
 		
 		// set wrapping on context TextArea
 		journalContextArea.setWrapText(true);
@@ -99,7 +99,7 @@ public class CreateController extends SceneController implements Initializable {
 	
 	
 	/**
-	 * Startup method that configures and sets up all forms on the Create page
+	 * Startup method that configures and sets up all forms on the Edit Page
 	 * 
 	 * @param journal the JournalModel of the entry to be edited
 	 */
@@ -107,11 +107,11 @@ public class CreateController extends SceneController implements Initializable {
 		this.journal = journal;
 		
 		// set the limits of new hour and minute spinners
-		SpinnerValueFactory<Integer> hourValueFactory = createTimeSpinnerValueFactory(0, 23);
-		SpinnerValueFactory<Integer> minuteValueFactory = createTimeSpinnerValueFactory(0, 59);
+		SpinnerValueFactory<Integer> hourValueFactory = this.createTimeSpinnerValueFactory(0, 23);
+		SpinnerValueFactory<Integer> minuteValueFactory = this.createTimeSpinnerValueFactory(0, 59);
 		
 		// fill in fields with journal data
-		fillOutFields(journal, hourValueFactory, minuteValueFactory);
+		this.fillOutFields(journal, hourValueFactory, minuteValueFactory);
 
 		// initialize new time spinner value factories that reflect journal entry data
 		hourSpinner.setValueFactory(hourValueFactory);
