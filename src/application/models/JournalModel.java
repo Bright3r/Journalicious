@@ -15,9 +15,6 @@ public class JournalModel {
 	private int minute;
 	private String context;
 	
-	// shared class variable so DAO can be access from static context
-	private static JournalDAO journalDAO = new JournalDAO();
-	
 	
 	/**
 	 * Constructs a new journal entry
@@ -125,6 +122,7 @@ public class JournalModel {
 		this.minute = minute;
 		this.context = context;
 		
+		JournalDAO journalDAO = new JournalDAO();
 		journalDAO.updateJournal(this);
 	}
 	
@@ -139,6 +137,7 @@ public class JournalModel {
 	 * @param context the context or body of the journal entry
 	 */
 	public static void createJournal(String title, String date, int hour, int minute, String context) {
+		JournalDAO journalDAO = new JournalDAO();
 		journalDAO.createJournal(title, date, hour, minute, context);
 	}
 	
@@ -147,6 +146,7 @@ public class JournalModel {
 	 * Deletes this journal entry from the DB
 	 */
 	public void deleteSelf() {
+		JournalDAO journalDAO = new JournalDAO();
 		journalDAO.deleteJournal(this);
 	}
 	
@@ -157,6 +157,7 @@ public class JournalModel {
 	 * @return an ArrayList containing a JournalModel for every journal in the DB
 	 */
 	public static ArrayList<JournalModel> getJournals() {
+		JournalDAO journalDAO = new JournalDAO();
 		return journalDAO.getJournals();
 	}
 	
@@ -168,6 +169,7 @@ public class JournalModel {
 	 * @return an ArrayList containing a JournalModel for every journal entry in the DB that contains the given keyword
 	 */
 	public static ArrayList<JournalModel> getJournals(String keyword) {
+		JournalDAO journalDAO = new JournalDAO();
 		return journalDAO.getJournals(keyword);
 	}
 	

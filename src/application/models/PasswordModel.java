@@ -9,7 +9,6 @@ import application.dal.PasswordDAO;
 public class PasswordModel {
 	private static final String DEFAULT_PASSWORD = "p";
 	
-	private PasswordDAO passDAO;
 	private String password;
 	
 	
@@ -17,9 +16,9 @@ public class PasswordModel {
 	 * Create a new PasswordModel and updates it to reflect DB
 	 */
 	public PasswordModel() {
-		this.passDAO = new PasswordDAO();
-		// update password model to reflect DB
-		this.passDAO.updatePassword(this);
+		// initialize password model to reflect DB
+		PasswordDAO passDAO = new PasswordDAO();
+		passDAO.updatePassword(this);
 	}
 	
 	
@@ -30,7 +29,8 @@ public class PasswordModel {
 	 */
 	public void setPassword(String newPassword) {
 		// change password in flat files
-		this.passDAO.setPassword(newPassword);
+		PasswordDAO passDAO = new PasswordDAO();
+		passDAO.setPassword(newPassword);
 		
 		// change password in model
 		this.password = newPassword;

@@ -7,7 +7,6 @@ import application.dal.UserDAO;
  * checking and changing the stored user info
  */
 public class UserModel {	
-	private UserDAO userDAO;
 	private String securityQuestion;
 	private String securityQuestionAnswer;
 	
@@ -16,9 +15,9 @@ public class UserModel {
 	 * Creates a new user model
 	 */
 	public UserModel() {
-		this.userDAO = new UserDAO();
-		// update model to reflect DB
-		this.userDAO.updateUserModel(this);
+		// initialize model to reflect DB
+		UserDAO userDAO = new UserDAO();
+		userDAO.updateUserModel(this);
 	}
 	
 	
@@ -29,7 +28,8 @@ public class UserModel {
 	 */
 	public void setSecurityQuestion(String newSecurityQuestion) {
 		// update in DB
-		this.userDAO.setSecurityQuestion(newSecurityQuestion);
+		UserDAO userDAO = new UserDAO();
+		userDAO.setSecurityQuestion(newSecurityQuestion);
 		
 		// update model
 		this.securityQuestion = newSecurityQuestion;
@@ -53,7 +53,8 @@ public class UserModel {
 	 */
 	public void setSecurityQuestionAnswer(String answer) {
 		// update in DB
-		this.userDAO.setSecurityQuestionAnswer(answer);
+		UserDAO userDAO = new UserDAO();
+		userDAO.setSecurityQuestionAnswer(answer);
 		
 		// update model
 		this.securityQuestionAnswer = answer;
